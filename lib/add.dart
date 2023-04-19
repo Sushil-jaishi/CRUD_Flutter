@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Add extends StatelessWidget {
-  var nameController=TextEditingController();
-  var emailController=TextEditingController();
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -11,12 +12,13 @@ class Add extends StatelessWidget {
       // Call the user's CollectionReference to add a new user
       return users
           .add({
-        'name': nameController.text, // John Doe
-        'email': emailController.text, // Stokes and Sons
-      })
+            'name': nameController.text, // John Doe
+            'email': emailController.text, // Stokes and Sons
+          })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('ADD'),
@@ -30,7 +32,7 @@ class Add extends StatelessWidget {
             TextFormField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: 'Name',
+                  labelText: 'Name',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),
@@ -48,11 +50,13 @@ class Add extends StatelessWidget {
               height: 20,
             ),
             Container(
-              width: double.infinity,
-                child: ElevatedButton(onPressed: (){
-                  addUser();
-
-                }, child: Text('Submit')))
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () {
+                      addUser();
+                      Navigator.pop(context);
+                    },
+                    child: Text('Submit')))
           ],
         ),
       ),
