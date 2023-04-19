@@ -1,11 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Edit extends StatelessWidget{
+class Edit extends StatelessWidget {
   var name;
   var email;
-  Edit({required this.name,required this.email});
+  var id;
+
+  Edit({required this.name, required this.email, required this.id});
+
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    Future<void> editUser() {
+      return users
+          .doc(id)
+          .set({
+            'name': name, // John Doe
+            'email': email, // Stokes and Sons
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit'),
@@ -17,6 +33,9 @@ class Edit extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
+              onChanged: (name1) {
+                name = name1;
+              },
               initialValue: name,
               decoration: InputDecoration(
                   labelText: 'Name',
@@ -27,6 +46,9 @@ class Edit extends StatelessWidget{
               height: 20,
             ),
             TextFormField(
+              onChanged: (email1) {
+                email = email1;
+              },
               initialValue: email,
               decoration: InputDecoration(
                   labelText: 'Email',
@@ -38,12 +60,15 @@ class Edit extends StatelessWidget{
             ),
             Container(
                 width: double.infinity,
-                child: ElevatedButton(onPressed: (){}, child: Text('Submit')))
+                child: ElevatedButton(
+                    onPressed: () {
+                      editUser();
+                      Navigator.pop(context);
+                    },
+                    child: Text('Submit')))
           ],
         ),
       ),
     );
-
   }
-
 }

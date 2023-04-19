@@ -12,9 +12,9 @@ class Add extends StatelessWidget {
       // Call the user's CollectionReference to add a new user
       return users
           .add({
-            'name': nameController.text, // John Doe
-            'email': emailController.text, // Stokes and Sons
-          })
+        'name': nameController.text, // John Doe
+        'email': emailController.text, // Stokes and Sons
+      })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
     }

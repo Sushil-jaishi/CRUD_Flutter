@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
         final List storeData = [];
         snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+          data['id'] = document.id;
           storeData.add(data);
         }).toList();
         return Scaffold(
@@ -54,7 +55,8 @@ class _HomePageState extends State<HomePage> {
                   for (var i = 0; i < storeData.length; i++) ...[
                     Items(
                         name: storeData[i]['name'],
-                        email: storeData[i]['email']),
+                        email: storeData[i]['email'],
+                        id: storeData[i]['id']),
                   ]
                 ],
               ),
