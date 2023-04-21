@@ -5,23 +5,18 @@ import 'homePage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   return runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _initialization,
-        builder: (context, snapshot) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'ToDo',
-            theme: ThemeData(primarySwatch: Colors.blueGrey),
-            home: Login(),
-          );
-        });
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'ToDo',
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
+      home: Login(),
+    );
   }
 }

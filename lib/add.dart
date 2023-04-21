@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Add extends StatelessWidget {
-  String text='';
+  String text = '';
   String email = '';
   String userId = '';
 
@@ -14,12 +14,9 @@ class Add extends StatelessWidget {
     String date = newdate.toString();
     CollectionReference users = FirebaseFirestore.instance.collection(userId);
     Future<void> addUser() {
-      // Call the user's CollectionReference to add a new user
       return users
           .doc(date)
-          .set({
-            'text': text
-          })
+          .set({'text': text})
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
     }
