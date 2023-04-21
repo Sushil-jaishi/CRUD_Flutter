@@ -1,3 +1,4 @@
+import 'package:crud/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'homePage.dart';
@@ -17,9 +18,9 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'CRUD',
+            title: 'ToDo',
             theme: ThemeData(primarySwatch: Colors.blueGrey),
-            home: HomePage(),
+            home: Login(),
           );
         });
   }

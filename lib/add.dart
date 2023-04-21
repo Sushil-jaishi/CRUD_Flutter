@@ -2,19 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Add extends StatelessWidget {
-  var nameController = TextEditingController();
-  var emailController = TextEditingController();
+  String text='';
+  String email = '';
+  String userId = '';
+
+  Add({required this.userId});
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    DateTime newdate = DateTime.now();
+    String date = newdate.toString();
+    CollectionReference users = FirebaseFirestore.instance.collection(userId);
     Future<void> addUser() {
       // Call the user's CollectionReference to add a new user
       return users
-          .add({
-        'name': nameController.text, // John Doe
-        'email': emailController.text, // Stokes and Sons
-      })
+          .doc(date)
+          .set({
+            'text': text
+          })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
     }
@@ -30,19 +35,11 @@ class Add extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
-              controller: nameController,
+              onChanged: (value) {
+                text = value;
+              },
               decoration: InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10))),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: emailController,
-              decoration: InputDecoration(
-                  labelText: 'Email',
+                  labelText: 'Enter your task',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),

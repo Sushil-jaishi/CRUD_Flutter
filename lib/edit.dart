@@ -2,21 +2,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Edit extends StatelessWidget {
-  var name;
-  var email;
-  var id;
+  String text;
+  final String documentId;
+  final String userId;
 
-  Edit({required this.name, required this.email, required this.id});
+  Edit(
+      {required this.text,
+      required this.documentId,
+      required this.userId});
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    CollectionReference users = FirebaseFirestore.instance.collection(userId);
     Future<void> editUser() {
       return users
-          .doc(id)
+          .doc(documentId)
           .set({
-            'name': name, // John Doe
-            'email': email, // Stokes and Sons
+            'text': text
           })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
@@ -33,28 +35,19 @@ class Edit extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
-              onChanged: (name1) {
-                name = name1;
+              onChanged: (value) {
+                text = value;
               },
-              initialValue: name,
+              initialValue: text,
               decoration: InputDecoration(
-                  labelText: 'Name',
+                  labelText: 'Enter your task',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),
             SizedBox(
               height: 20,
             ),
-            TextFormField(
-              onChanged: (email1) {
-                email = email1;
-              },
-              initialValue: email,
-              decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10))),
-            ),
+
             SizedBox(
               height: 20,
             ),
